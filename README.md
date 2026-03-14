@@ -81,7 +81,7 @@ bun install
 | **tool-counter-widget** | `extensions/tool-counter-widget.ts` | Live-updating above-editor widget showing per-tool call counts with background colors                                                                      |
 | **subagent-widget**     | `extensions/subagent-widget.ts`     | `/sub <task>` command that spawns background Pi subagents; each gets its own streaming live-progress widget                                                |
 | **tilldone**            | `extensions/tilldone.ts`            | Task discipline system — define tasks before starting work; tracks completion state across steps; shows persistent task list in footer with live progress  |
-| **pi-backtask**         | `plugins/pi-backtask/pi-backtask.ts`| External plugin submodule from [`artiombell/pi-backtask`](https://github.com/artiombell/pi-backtask). Claude Code style task list + background jobs (`Ctrl+T`, `Ctrl+B`, `/task`, `/bg`). |
+| **pi-backtask**         | `plugins/pi-backtask/pi-backtask.ts`| External plugin submodule from [`artiombell/pi-backtask`](https://github.com/artiombell/pi-backtask). Uses `gob` as backend for `/bg` commands; non-intrusive (no fullscreen takeover). |
 | **agent-team**          | `extensions/agent-team.ts`          | Dispatcher-only orchestrator: the primary agent delegates all work to named specialist agents via `dispatch_agent`; shows a grid dashboard                 |
 | **system-select**       | `extensions/system-select.ts`       | `/system` command to interactively switch between agent personas/system prompts from `.pi/agents/`, `.claude/agents/`, `.gemini/agents/`, `.codex/agents/` |
 | **damage-control**      | `extensions/damage-control.ts`      | Real-time safety auditing — intercepts dangerous bash patterns and enforces path-based access controls from `.pi/damage-control-rules.yaml`                |
@@ -163,6 +163,16 @@ git submodule update --init --recursive
 ### Backtask quickstart (`pi-backtask`)
 
 `pi-backtask` mirrors Claude Code style task tracking and background jobs inside Pi.
+
+Dependency for background jobs:
+
+```bash
+brew tap juanibiapina/taps
+brew install gob
+```
+
+`pi-backtask` uses `gob add/list/stop/stdout` under the hood and does not launch `gob tui`.
+
 
 Optional: share task lists across terminal sessions by setting an explicit list id:
 
