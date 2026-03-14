@@ -171,8 +171,7 @@ brew tap juanibiapina/taps
 brew install gob
 ```
 
-`pi-backtask` uses `gob add/list/stop/stdout` under the hood and does not launch `gob tui`.
-
+`pi-backtask` uses `gob add/list/stop/stdout` under the hood and does not launch `gob tui` (non-fullscreen integration).
 
 Optional: share task lists across terminal sessions by setting an explicit list id:
 
@@ -186,18 +185,38 @@ Launch it:
 just ext-pi-backtask
 ```
 
-Core commands:
+Command reference:
 
 ```bash
+# Task list
 /task add Investigate flaky training metrics
 /task start 1
 /task done 1
+/task pending 1
 /task list
 
+# Background execution
 /bg run "pytest tests/unit/test_metrics.py -q"
 /bg agent "Review this file and propose refactor steps"
 /bg list
 /bg kill 2
+/bg clear
+```
+
+Workflow examples:
+
+```bash
+# Example: run tests in background while continuing chat
+/task add Validate feature branch before merge
+/task start 1
+/bg run "pytest tests/unit/test_metrics.py -q"
+/bg list
+
+# Example: delegate analysis to background agent
+/task add Audit websocket reconnection behavior
+/task start 2
+/bg agent "Audit websocket reconnection path and list concrete failure modes"
+/bg list
 ```
 
 Keyboard shortcuts:
